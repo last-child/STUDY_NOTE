@@ -2,7 +2,7 @@
 
 <br>   
 
-![image](https://github.com/last-child/BE_NOTE/assets/98595054/c1b08670-99da-46c2-ad15-a0e1feb8b1c3)
+![image](https://github.com/last-child/STUDY_NOTE/assets/98595054/5067e682-2f7d-47b4-9b09-2acb20236a69)
 
 <br>   
 
@@ -12,7 +12,7 @@ String str2 = "hello, World!";
 
 int length = str1.length();                      // 문자열의 길이 → 13
 
-char character = str1.indexOf(4);                // 4번 인덱스의 문자 → 'o'
+char character = str1.charAt(4);                 // 4번 인덱스의 문자 → 'o'
 
 boolean result1 = str1.equals(str2);             // 두 문자열이 동일한지 비교 → false
 
@@ -24,7 +24,7 @@ int result3 = str1.compareTo(str2);              // 두 문자열 유니코드 �
 <br>   
 <br>   
 
-![image](https://github.com/last-child/BE_NOTE/assets/98595054/2765a9cf-cf30-416b-91cf-19a1e70e512a)
+![image](https://github.com/last-child/STUDY_NOTE/assets/98595054/86735af4-24c1-42dd-a869-0883b5583e7b)
 
 <br>   
 
@@ -47,7 +47,7 @@ boolean result3 = text.endsWith("Planet!");   // 특정 단어로 끝나는지? 
 <br>   
 <br>   
 
-![image](https://github.com/last-child/BE_NOTE/assets/98595054/79234de6-3a3d-4379-b4ff-84dcc12bfef9)
+![image](https://github.com/last-child/STUDY_NOTE/assets/98595054/9c99dcd3-73bf-4a8e-a0fd-80c395ef8c58)
 
 <br>   
 
