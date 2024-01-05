@@ -1,4 +1,26 @@
-## 01. String 메소드
+## 01. String 객체
+
+
+<img src="https://github.com/last-child/STUDY_NOTE/assets/98595054/2c664c4d-e21a-4f94-a32f-89cd0cc3482d" width="60%" height="60%">
+
+<br>  
+<br>   
+<br>   
+
+```java
+String str1 = "Java";
+String str2 = "Java";
+String str3 = "C++";
+
+String str4 = new String("Java");
+String str5 = new String("Java");
+```
+
+<br>   
+<br>   
+<br>   
+
+## 02. String 메소드
 
 <br>   
 
