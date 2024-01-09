@@ -157,3 +157,70 @@ public class AggregationExample {
 #### 예를 들어 Library 객체는 Book 객체들을 가지고 있다. 
 #### 하지만 Book 객체는 Library 객체의 생명주기에 의존적이지 않으므로, Book 객체가 Library 객체 없이도 존재할 수 있다. 
 #### 또한 두 객체는 느슨하게 결합되기 때문에 Library 객체는 Book 객체를 유연하게 교체할 수 있다. 
+
+<br>   
+<br>   
+<br>   
+<br>   
+
+## 03. Composition
+
+<br>   
+
+```java
+class Room {
+    String roomName;
+    int floor;
+
+    Room(String name, int floor) {
+        this.roomName = name;
+        this.floor = floor;
+    }
+
+    public void describe() {
+        System.out.println(floor + "층 " + roomName);
+    }
+}
+```
+
+<br>   
+
+```java
+class Library {
+    private List<Room> rooms;
+
+    Library(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public void describe() {
+        for (Room room : rooms) {
+            room.describe();
+        }
+    }
+}
+```
+
+<br>   
+
+```java
+public class CompositionExample {
+    public static void main(String[] args) {
+        Library library = new Library();
+        
+        Room readingRoom = new Room("ReadingRoom", 1);
+        Room referenceRoom = new Room("ReferenceRoom", 2);
+
+        library.addRoom(readingRoom);
+        library.addRoom(referenceRoom);
+
+        library.describe();
+    }
+}
+```
+
+<br>   
+
+#### Composition은 전체와 부분의 관계를 나타내지만, '부분' 객체의 생명주기는 '전체' 객체에 의존적이다.
+#### 전체 객체가 소멸하면 부분 객체도 함께 소멸하기 때문에 부분 객체가 전체 객체 없이는 독립적으로 존재할 수 없다.
+#### 예를 들어 각 방은 도서관의 일부로서만 존재한다. 도서관이 소멸하면 그 안의 모든 방들도 함께 소멸한다. 
