@@ -3,19 +3,15 @@
 <br>   
 
 ```java
-class Driver {
-    private String driverName;
+class Librarian {
+    String name;
 
-    Driver(String name) {
-        this.driverName = name;
+    Librarian(String name) {
+        this.name = name;
     }
 
-    public void replaceDriver(Driver newDriver) {
-        this.driver = newDriver;
-    }
-
-    public String getDriverName() {
-        return driverName;
+    public void manageLibrary() {
+        System.out.println(name + " is managing the library.");
     }
 }
 ```
@@ -23,18 +19,23 @@ class Driver {
 <br>   
 
 ```java
-class Car {
-    private String carName;
-    private Driver driver;
+class Library {
+    String name;
+    private Librarian librarian;
 
-    Car(String name, Driver driver) {
-        this.carName = name;
-        this.driver = driver;
+    Library(String name, Librarian librarian) {
+        this.name = name;
+        this.librarian = librarian;
     }
 
-    public void getCarDetails() {
-        System.out.println("자동차 이름 : " + carName);
-        System.out.println("운전자 이름 : " + driver.getDriverName());
+    public void changeLibrarian(Librarian newLibrarian) {
+        this.librarian = newLibrarian;
+        System.out.println("Librarian has been changed to : " + newLibrarian.name);
+    }
+
+    public void openLibrary() {
+        System.out.println(name + " is now open.");
+        librarian.manageLibrary();
     }
 }
 ```
@@ -45,9 +46,14 @@ class Car {
 
 public class AssociationExample {
     public static void main(String[] args) {
-        Driver driver = new Driver("Sejin");
-        Car car = new Car("Toyota", driver);
-        car.getCarDetails();
+        Librarian teacher1 = new Librarian("서세연");
+        Librarian teacher2 = new Librarian("최수민");
+
+        Library library = new Library("중앙 도서관", teacher1);
+        library.openLibrary();
+
+        library.changeLibrarian(teacher2);
+        library.openLibrary();
     }
 }
 ```
@@ -60,9 +66,9 @@ public class AssociationExample {
 
 <br>   
 
-#### 예를 들어 Car 객체가 Driver 객체를 참조하지만, Car 객체가 소멸되어도 Driver 객체는 그대로 남아있을 수 있다.
-#### 또한 Driver 클래스의 코드를 수정해도 Car 객체의 기능에 영향을 미치지 않는다.
-#### Association에서 참조가 동적으로 변경될 수 있다. 즉 Car 객체는 Driver 객체를 유연하게 교체할 수 있다. 
+#### 예를 들어 도서관 객체가 사서 객체를 참조하지만, 도서관 객체가 소멸되어도 사서 객체는 그대로 남아있을 수 있다.
+#### 또한 사서 클래스의 코드를 수정해도 도서관 객체의 기능에 영향을 미치지 않는다.
+#### Association에서 참조가 동적으로 변경될 수 있다. 즉 도서관 객체는 사서 객체를 유연하게 교체할 수 있다. 
 
 <br>   
 <br>   
@@ -74,15 +80,13 @@ public class AssociationExample {
 <br>   
 
 ```java
-class Engine {
-    private String engineType;
+class Book {
+    String title;
+    String author;
 
-    Engine(String type) {
-        this.engineType = type;
-    }
-
-    public String getEngineType() {
-        return engineType;
+    Book(String title, String author) {
+        this.title = title;
+        this.author = author;
     }
 }
 ```
@@ -90,22 +94,30 @@ class Engine {
 <br>   
 
 ```java
-class Car {
-    private String model;
-    private Engine engine;
+class Library {
+    String name;
+    private List<Book> books;
 
-    Car(String model, Engine engine) {
-        this.model = model;
-        this.engine = engine;
+    Library(String name) {
+        this.name = name;
+        this.books = new ArrayList<>();
     }
 
-    public void replaceEngine(Engine newEngine) {
-        this.engine = newEngine;
+    public void addBook(Book book) {
+        books.add(book);
+        System.out.println(book.title + " has been added to the library.");
     }
 
-    public void getCarDetails() {
-        System.out.println("자동차 모델 : " + model);
-        System.out.println("자동차 엔진 : " + engine.getEngineType());
+    public void removeBook(Book book) {
+        if (books.remove(book)) {
+            System.out.println(book.title + " has been removed from the library.");
+        } else {
+            System.out.println("Book not found in the library.");
+        }
+    }
+
+    public List<Book> getBooks() {
+        return books;
     }
 }
 ```
@@ -115,12 +127,26 @@ class Car {
 ```java
 public class AggregationExample {
     public static void main(String[] args) {
-        Engine engine = new Engine("V8");
-        Car car = new Car("Ford Mustang", engine);
-        car.getCarDetails();
+        Library library = new Library("Central Library");
+
+        Book book1 = new Book("나루토", "키시모토 마사시");
+        Book book2 = new Book("원피스", "오다 에이치로");
+        Book book3 = new Book("블리치", "쿠보 타이토");
+
+        library.addBook(book1);
+        library.addBook(book2);
+        library.addBook(book3);
+
+        library.removeBook(book1);
+
+        // 도서관에 있는 책 출력
+        for (Book book : library.getBooks()) {
+            System.out.println(book.title + " by " + book.author);
+        }
     }
 }
 ```
+
 <br>   
 
 #### Aggregation은 전체와 부분의 관계를 나타내지만, 전체 객체와 부분 객체는 독립적으로 존재할 수 있다. 
@@ -128,6 +154,6 @@ public class AggregationExample {
 
 <br>   
 
-#### 예를 들어 Car 클래스는 Engine 클래스의 인스턴스를 가지고 있다. 
-#### 하지만 Car는 Engine의 생명주기에 의존적이지 않으므로 Engine 객체가 Car 객체 없이도 존재할 수 있다. 
-#### 또한 두 객체는 느슨하게 결합되기 때문에 Car 객체는 Engine 객체를 유연하게 교체할 수 있다. 
+#### 예를 들어 Library 객체는 Book 객체들을 가지고 있다. 
+#### 하지만 Book 객체는 Library 객체의 생명주기에 의존적이지 않으므로, Book 객체가 Library 객체 없이도 존재할 수 있다. 
+#### 또한 두 객체는 느슨하게 결합되기 때문에 Library 객체는 Book 객체를 유연하게 교체할 수 있다. 
