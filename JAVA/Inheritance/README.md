@@ -29,7 +29,7 @@ class ArmySoldier extends Soldier {
 
     public ArmySoldier(String serviceNumber) {
         // super( );
-        this.division = "훈련소소";
+        this.division = "훈련소";
         System.out.println("육군 인스턴스의 부대 : " + division);
     }
 }
@@ -65,7 +65,7 @@ ArmySoldier armySoldier = new ArmySoldier("24-12345678");
 <br>   
 <br>   
 
-## 02. Overriding
+## 02. Method Overriding
 
 <br>   
 
@@ -73,6 +73,10 @@ ArmySoldier armySoldier = new ArmySoldier("24-12345678");
 class Soldier {
     public void drive() {
         System.out.println("군인이 차량을 조종합니다.");
+    }
+
+    public void shoot() {
+        System.out.println("군인이 총을 쏩니다.");
     }
 }
 ```
@@ -85,19 +89,13 @@ class ArmySoldier extends Soldier {
     public void drive() {
         System.out.println("육군이 탱크를 조종합니다.");
     }
-}
 
-class NavySoldier extends Soldier {
-    @Override
-    public void drive() {
-        System.out.println("해군이 함정을 조종합니다.");
+    public void march() {
+        System.out.println("육군이 행군을 합니다.");
     }
-}
 
-class AirForceSoldier extends Soldier {
-    @Override
-    public void drive() {
-        System.out.println("공군이 전투기를 조종합니다.");
+    public void superDrive() {
+        super.drive(); // 슈퍼클래스의 drive() 메서드 호출
     }
 }
 ```
@@ -105,13 +103,26 @@ class AirForceSoldier extends Soldier {
 <br>   
 
 ```java
-Soldier soldier1 = new Soldier();
-Soldier soldier2 = new ArmySoldier();
-Soldier soldier3 = new NavySoldier();
-Soldier soldier4 = new AirForceSoldier();
+ArmySoldier armySoldier = new ArmySoldier();
 
-soldier1.drive(); // 군인이 차량을 조종합니다.      
-soldier2.drive(); // 육군이 탱크를 조종합니다.
-soldier3.drive(); // 해군이 함정을 조종합니다.
-soldier4.drive(); // 공군이 전투기를 조종합니다.
+armySoldier.drive();        // 육군이 탱크를 조종합니다. (오버라이딩한 메서드)
+armySoldier.shoot();        // 군인이 총을 쏩니다. (오버라이딩하지 않은 메서드)
+armySoldier.march();        // 육군이 행군을 합니다. (서브클래스 고유 메서드)
+armySoldier.superDrive();   // 군인이 차량을 조종합니다. (슈퍼클래스 메서드 호출)
 ```
+
+<br>   
+
+#### 오버라이딩(Overriding)은 슈퍼클래스 메서드를 서브클래스에서 재정의하는 과정이다. 
+#### 서브클래스 객체에서 호출할 경우 슈퍼클래스의 메서드가 아니라 서브클래스의 메서드가 실행된다.
+
+<br>   
+
+#### 오버라이딩된 메서드는 시그니처(메서드 이름, 파라미터 리스트, 리턴 타입)가 동일해야 한다. 
+#### final 메서드는 상속되지 않기 때문에, 서브클래스에서 오버라이딩할 수 없다.
+
+<br>   
+
+#### 접근 권한을 확장하여 오버라이딩할 수 있지만, 접근 권한을 축소하여 오버라이딩할 수 없다.
+#### 예를 들어 public으로 선언된 메서드를 서브클래스에서 private로 오버라이딩해서는 안 된다.
+#### private로 선언된 메서드는 서브클래스에서도 직접 접근될 수 없으므로, 오버라이딩될 수 없다.
