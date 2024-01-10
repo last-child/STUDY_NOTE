@@ -29,7 +29,8 @@ class ArmySoldier extends Soldier {
 
     public ArmySoldier(String serviceNumber) {
         // super( );
-        System.out.println("육군 인스턴스의 부대 : " + 훈련소);
+        this.division = "훈련소소";
+        System.out.println("육군 인스턴스의 부대 : " + division);
     }
 }
 ```
@@ -99,4 +100,18 @@ class AirForceSoldier extends Soldier {
         System.out.println("공군이 전투기를 조종합니다.");
     }
 }
+```
+
+<br>   
+
+```java
+Soldier soldier1 = new Soldier();
+Soldier soldier2 = new ArmySoldier();
+Soldier soldier3 = new NavySoldier();
+Soldier soldier4 = new AirForceSoldier();
+
+soldier1.drive(); // 군인이 차량을 조종합니다.      
+soldier2.drive(); // 육군이 탱크를 조종합니다.
+soldier3.drive(); // 해군이 함정을 조종합니다.
+soldier4.drive(); // 공군이 전투기를 조종합니다.
 ```
