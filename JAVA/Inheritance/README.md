@@ -57,7 +57,7 @@ ArmySoldier armySoldier = new ArmySoldier("24-12345678");
 
 <br>   
 
-#### 서브 클래스 생성자의 첫줄에 super(...) 메서드를 명시적으로 선언하면 매개값에 따라 슈퍼 클래스의 특정 생성자를 호출할 수 있다.
+#### 서브 클래스 생성자의 첫줄에 super(...) 메서드를 명시적으로 선언하면 매개값에 따라 슈퍼 클래스의 생성자를 지정하여 호출할 수 있다.
 #### 하지만 매개값 타입과 일치하는 슈퍼 클래스 생성자가 없을 경우 컴파일 오류가 발생한다.
 
 <br>   
@@ -77,6 +77,10 @@ class Soldier {
 
     public void shoot() {
         System.out.println("군인이 총을 쏩니다.");
+    }
+
+    private void rest() {
+        System.out.println("군인이 휴식을 취합니다.");
     }
 }
 ```
@@ -109,6 +113,7 @@ armySoldier.drive();        // 육군이 탱크를 조종합니다. (오버라�
 armySoldier.shoot();        // 군인이 총을 쏩니다. (오버라이딩하지 않은 메서드)
 armySoldier.march();        // 육군이 행군을 합니다. (서브클래스 고유 메서드)
 armySoldier.superDrive();   // 군인이 차량을 조종합니다. (슈퍼클래스 메서드 호출)
+armySoldier.rest();         // private 메서드에 접근할 수 없어 컴파일 오류 발생.
 ```
 
 <br>   
@@ -119,10 +124,82 @@ armySoldier.superDrive();   // 군인이 차량을 조종합니다. (슈퍼클�
 <br>   
 
 #### 오버라이딩된 메서드는 시그니처(메서드 이름, 파라미터 리스트, 리턴 타입)가 동일해야 한다. 
-#### final 메서드는 상속되지 않기 때문에, 서브클래스에서 오버라이딩할 수 없다.
+#### 서브클래스에서는 슈퍼클래스의 final 메소드를 그대로 사용할 수 있지만, 오버라이딩할 수 없다.
 
 <br>   
 
 #### 접근 권한을 확장하여 오버라이딩할 수 있지만, 접근 권한을 축소하여 오버라이딩할 수 없다.
 #### 예를 들어 public으로 선언된 메서드를 서브클래스에서 private로 오버라이딩해서는 안 된다.
 #### 한편 private 메서드는 서브클래스에서도 직접 접근할 수 없으므로, 오버라이딩될 수 없다.
+
+<br>   
+<br>   
+<br>   
+<br>   
+
+## 03. Upcasting
+
+<br>   
+
+```java
+class Soldier {
+    String hat = "군모";
+
+    public void drive() {
+        System.out.println("군인이 차량을 조종합니다.");
+    }
+
+    public void shoot() {
+        System.out.println("군인이 총을 쏩니다.");
+    }
+}
+```
+
+<br>   
+
+```java
+class ArmySoldier extends Soldier {
+    String hat = "베레모";
+    int serviceMonth = 18;
+
+    @Override
+    public void drive() {
+        System.out.println("육군이 탱크를 조종합니다.");
+    }
+
+    public void march() {
+        System.out.println("육군이 행군을 합니다.");
+    }
+}
+```
+
+<br>   
+
+```java
+Soldier soldier = new ArmySoldier();
+// ArmySoldier 객체를 Soldier 타입의 변수에 업캐스팅
+
+
+System.out.println("모자: " + soldier.hat);
+// 슈퍼클래스의 필드 출력 -> 모자 : 군모 
+
+soldier.drive();
+// 서브클래스의 오버라이딩된 메소드 호출 -> 육군이 탱크를 조종합니다.
+
+soldier.shoot();
+// 슈퍼클래스의 메소드 호출 -> 군인이 총을 쏩니다.
+
+
+System.out.println("복무 개월 : " + soldier.serviceMonth);
+// 서브클래스의 필드 접근 불가 -> 컴파일 에러
+
+soldier.march();
+// 서브클래스의 메소드 호출 불가 -> 컴파일 에러
+```
+
+<br>   
+
+#### 서브클래스 객체를 슈퍼클래스 타입으로 형변환(업캐스팅)하면 슈퍼클래스 타입으로 서브클래스 객체를 다룰 수 있게 된다.
+#### 업캐스팅된 변수로는 슈퍼클래스에 정의된 멤버들에만 접근할 수 있지만, 서브클래스에 추가된 멤버들에는 접근할 수 없다. 
+#### 그러나 서브클래스에서 오버라이딩된 메서드가 존재할 경우 
+#### 슈퍼클래스 타입의 변수를 통해 해당 메서드를 호출하면 서브클래스의 메서드가 실행된다.
