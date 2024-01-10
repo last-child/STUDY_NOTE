@@ -103,6 +103,16 @@ class ArmySoldier extends Soldier {
     }
 }
 ```
+<br>   
+
+```java
+class NavySoldier extends Soldier {
+    @Override
+    public void drive() {
+        System.out.println("해군이 잠수함을 조종합니다.");
+    }
+}
+```
 
 <br>   
 
@@ -203,3 +213,52 @@ soldier.march();
 #### 업캐스팅된 변수로는 슈퍼클래스에 정의된 멤버들에만 접근할 수 있지만, 서브클래스에 추가된 멤버들에는 접근할 수 없다. 
 #### 그러나 서브클래스에서 오버라이딩된 메서드가 존재할 경우 
 #### 슈퍼클래스 타입의 변수를 통해 해당 메서드를 호출하면 서브클래스의 메서드가 실행된다.
+
+<br>   
+<br>   
+<br>   
+<br>   
+
+## 04. Downcasting
+
+<br>   
+
+```java
+public static void tryDowncast(Soldier soldier) {
+    if (soldier instanceof ArmySoldier) {
+        ArmySoldier armySoldier = (ArmySoldier) soldier;
+
+        // 다운캐스팅된 변수로 서브클래스 멤버에 접근
+        System.out.println("모자 : " + armySoldier.hat);
+        System.out.println("복무 개월 : " + armySoldier.monthsOfService);
+        armySoldier.march();
+        armySoldier.drive();
+    } else {
+        System.out.println("당신은 육군인지 모르겠네요.");
+    }
+}
+```
+
+<br>   
+
+```java
+// ArmySoldier 객체를 Soldier 타입의 변수에 업캐스팅
+Soldier armySoldier = new ArmySoldier();
+
+// Soldier 타입으로 업캐스팅된 ArmySoldier 객체를 ArmySoldier 타입의 변수에 다운캐스팅 (성공)
+tryDowncast(armySoldier);
+
+
+// NavySoldier 객체를 Soldier 타입의 변수에 업캐스팅
+Soldier navySoldier = new NavySoldier();
+
+// Soldier 타입으로 업캐스팅된 NavySoldier 객체를 ArmySoldier 타입의 변수에 다운캐스팅 (실패)
+tryDowncast(navySoldier);
+
+
+// Soldier 객체를 생성
+Soldier navySoldier = new Soldier();
+
+// Soldier 객체를 ArmySoldier 타입의 변수에 다운캐스팅 (실패)
+tryDowncast(navySoldier);
+```
